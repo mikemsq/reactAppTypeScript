@@ -62,7 +62,7 @@ let store: StoreType = {
         headerPicLink: 'https://img.freepik.com/free-vector/golden-bird-logo-design_1195-336.jpg?w=2000',
 
         sidebar: [
-            { id: 0, link: "MyMy Profile", navLink: "/profile" },
+            { id: 0, link: "Profile", navLink: "/profile" },
             { id: 1, link: "Messages", navLink: "/dialogs" },
             { id: 2, link: "News", navLink: "/news" },
             { id: 3, link: "Music", navLink: "/music" },
