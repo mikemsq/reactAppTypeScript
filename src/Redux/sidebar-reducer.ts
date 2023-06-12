@@ -5,7 +5,7 @@ type MenuButtonType = {
     }
 
 let initialState: Array<MenuButtonType> = [
-        { id: 0, link: "Profile", navLink: "/profile" },
+        { id: 0, link: "My Profile", navLink: "/profile" },
         { id: 1, link: "Messages", navLink: "/dialogs" },
         { id: 2, link: "News", navLink: "/news" },
         { id: 3, link: "Music", navLink: "/music" },
