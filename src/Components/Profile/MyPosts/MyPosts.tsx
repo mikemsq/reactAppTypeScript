@@ -1,22 +1,21 @@
 import React from 'react';
+import { PostType } from '../../../types';
 import styles from './MyPosts.module.css';
+import { PropsFromRedux } from './MyPostsContainer';
 import Post from './Post/Post';
-import { addPostActionCreator, updatePostTextActionCreator } from '../../../Redux/profile-reducer'
 
-
-
-const MyPosts = (props: any): JSX.Element => {
-    let ava = props.profilePage.pictureLinks.avaLink;
+const MyPosts = (props: PropsFromRedux): JSX.Element => {
+    let ava: string = props.profilePage.pictureLinks.avaLink;
     let postsToJsx: Array<JSX.Element> = props.profilePage.posts.map(
-        (p: { id: number, msg: string, likes: number, ava: string | null }) =>
-            <Post key={p.id} message={p.msg} count={p.likes} ava={ava} />);
+        (p: PostType) => <Post key={p.id} message={p.msg} count={p.likes} ava={ava} />);
 
-    let addNewPost = (): void => {
-        props.dispatch(addPostActionCreator());
+    const onAddPost = (): void => {
+        props.addPost();
     }
 
-    let onPostChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        props.dispatch(updatePostTextActionCreator(e.target.value));
+    const onPostChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+        let text: string = e.target.value;
+        props.updateNewPostText(text);
     }
 
     return (
@@ -27,7 +26,7 @@ const MyPosts = (props: any): JSX.Element => {
                     <textarea onChange={onPostChange} value={props.profilePage.currentPost} />
                 </div>
                 <div>
-                    <button onClick={addNewPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={ styles.posts }>

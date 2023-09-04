@@ -2,24 +2,27 @@ import React from 'react';
 import styles from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
-import { addMessageActionCreator, updateMessageTextActionCreator } from '../../Redux/message-reducer';
+import { DialogType } from '../../types';
+import { PropsFromRedux } from './DialogsContainer';
 
-const Dialogs = (props: any): JSX.Element => {
-    const getClassName = ( isActive: any, isPending: any ) => isPending ? styles.pending : isActive ? styles.active : "";
+const Dialogs = (props: PropsFromRedux): JSX.Element => {
+    const getClassName: Function = (props: { isActive: boolean, isPending: boolean }) =>
+        props.isPending ? styles.pending : props.isActive ? styles.active : "";
 
-    let dialogsToJsx: Array<JSX.Element> = props.dialogsData.dialogs.map(
-        (d: { id: number, name: string, ava: string }) =>
+    let dialogsToJsx: Array<JSX.Element> = props.dialogs.map(
+        (d: DialogType) =>
         <Dialog key={d.id} id={d.id} name={d.name} ava={d.ava} class_={getClassName} />);
 
-    let messagesToJsx: Array<JSX.Element> = props.dialogsData.messages.map(
+    let messagesToJsx: Array<JSX.Element> = props.messages.map(
         (m: {id: number, msg: string}) => <Message key={m.id} msg={m.msg} />)
 
-    const newMessage = (): void => {
-        props.dispatch(addMessageActionCreator());
+    const onNewMessage = (): void => {
+        props.addMessage();
     }
 
     const onMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        props.dispatch(updateMessageTextActionCreator(e.target.value));
+        let text: string = e.target.value;
+        props.updateMessage(text);
     }
 
     return (
@@ -32,10 +35,10 @@ const Dialogs = (props: any): JSX.Element => {
                     {messagesToJsx}
                 </div>
                 <div>
-                    <textarea onChange={onMessageChange} value={props.dialogsData.currentMessage} />
+                    <textarea onChange={onMessageChange} value={props.currentMessage} />
                 </div>              
                 <div>
-                    <button onClick={newMessage}>Message</button>
+                    <button onClick={onNewMessage}>Message</button>
                 </div>
                 
             </div>

@@ -1,10 +1,10 @@
-import React from 'react';
 import styles from './Header.module.css';
+import { PropsFromRedux } from './HeaderContainer';
 
-const Header = (props: any) => {
+const Header = (props: PropsFromRedux) => {
     return (
         <header className={styles.header}>
-            <img src={props.picLink} alt=''></img>
+            <img src={props.header} alt=''></img>
         </header>
     );
 }
